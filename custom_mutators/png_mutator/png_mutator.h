@@ -21,7 +21,8 @@ const u8 IEND_CHUNK[] = {0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0
 const size_t PNG_SIG_SIZE = 8;
 const size_t MIN_BUF_SIZE = 33;
 
-const u8     MAX_U8 = 255;
+const u8     MAX_U8 = 255; // Лучше юзать UCHAR_MAX из <limits.h> так как для каждой машины чар может быть разный, 
+                           // либо явно указать, что ты считаешь максимальное значение байта и посчитать сдвигом 
 
 const size_t VALID_VALUE_IHDR_SIZE    = 0x0d;
 const u8     VALID_VALUE_COMPRESSION  = 0;
