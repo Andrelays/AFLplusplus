@@ -1,7 +1,7 @@
 /*
    Compile with:
 
-     gcc -shared -Wall -O3 post_library_png.so.c -o post_library_png.so -lz
+     gcc -shared -Wall -O3 post_library_png.so.c -o post_library_png.so -lz //TODO: Please, provide a correct compilation rule, or, better, write a minimal compilation script.
 
 */
 
@@ -9,18 +9,18 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <zlib.h>
-#include <arpa/inet.h>
+#include <zlib.h> 
+#include <arpa/inet.h> // TODO: Why do you need inet in png mutator??
 #include "png_mutator.h"
 
-const size_t MAX_NUM_GENERATE_CHUNK = 5;
+const size_t MAX_NUM_GENERATE_CHUNK = 5; // TODO: Make all global const static to prevent global namespace clogging
 const size_t MIN_NUM_GENERATE_CHUNK = 3;
 
 static void   fill_random  (u8 *arr, size_t len, u8 max);
 static size_t insert_chunk (u8 *insert_buf);
 static size_t insert_ihdr  (u8 *insert_buf);
 
-typedef struct my_mutator {
+typedef struct my_mutator { //TODO: Why do you name a struct which is typedef'ed
     afl_state_t *afl;
 
     u8 *mutated_out;

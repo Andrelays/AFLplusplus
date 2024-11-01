@@ -13,7 +13,7 @@
 #include <arpa/inet.h>
 #include "png_mutator.h"
 
-#define IS_RAND_33_PERCENT_PROBABILITY !(rand() % 3)
+#define IS_RAND_33_PERCENT_PROBABILITY !(rand() % 3) // TODO: make a function 
 
 typedef struct my_mutator {
     afl_state_t *afl;
@@ -37,7 +37,8 @@ static size_t insert_chunk (u8 *insert_buf);
  *         Return NULL on error.
  */
 my_mutator_t *afl_custom_init(afl_state_t *afl, uint32_t seed)
-{
+{   
+    // TODO: I've seen this define before. Avoid copy-pasting by moving it to common header file
     #define ALLOCATE_MEMORY_(buf, ...)                                  \
     do {                                                                \
         buf = (u8 *)calloc(MAX_FILE, sizeof(u8));                       \

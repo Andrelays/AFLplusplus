@@ -1,7 +1,9 @@
 #ifndef PNG_MUTATOR_H_INCLUDED
 #define PNG_MUTATOR_H_INCLUDED
-
-#include "afl-fuzz.h" // You need to use -I/path/to/AFLplusplus/include -I.
+// TODO: my lsp said, "Included header is not used directly"
+//       avoid including header file in other header since it significantly increase compilation time
+//
+#include "afl-fuzz.h" // You need to use -I/path/to/AFLplusplus/include -I. 
 
 static const char *const TYPE_ARRAY[] = {
 "IDAT", "IEND", "IHDR", "PLTE", "bKGD",
