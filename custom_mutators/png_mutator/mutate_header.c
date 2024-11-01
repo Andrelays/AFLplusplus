@@ -13,8 +13,6 @@
 #include <arpa/inet.h>
 #include "png_mutator.h"
 
-const size_t NUM_MUTATION_OPTION = 9;
-
 typedef enum mutation_ihdr {
     MUTATE_LEN          = 0,
     MUTATE_TYPE         = 1,
@@ -24,8 +22,8 @@ typedef enum mutation_ihdr {
     MUTATE_COLOR_TYPE   = 5,
     MUTATE_COMPRESSION  = 6,
     MUTATE_FILTER       = 7,
-    MUTATE_INTERLACE    = 8
-
+    MUTATE_INTERLACE    = 8,
+    NUM_MUTATION_OPTION // Компилятор автоматически подсчитает значение опции, как последняя + 1, т.е. кол-во всех опций
 } mutation_ihdr_t;
 
 typedef struct my_mutator {
@@ -61,11 +59,11 @@ my_mutator_t *afl_custom_init(afl_state_t *afl, uint32_t seed)
                 free(pta[i]);                                           \
             }                                                           \
                                                                         \
-            perror("Afl_custom_init alloc_##buf");                      \
+            perror("Afl_custom_init alloc_" #buf);                      \
             return NULL;                                                \
         }                                                               \
                                                                         \
-    } while(0)
+    } while(0) // 
 
     srand(seed); // needed also by surgical_havoc_mutate()
 
@@ -76,7 +74,7 @@ my_mutator_t *afl_custom_init(afl_state_t *afl, uint32_t seed)
         return NULL;
     }
 
-    ALLOCATE_MEMORY_(data->mutated_out, data);
+    ALLOCATE_MEMORY_(data->mutated_out, data); // Зачем юзать макрос, если он используется всего один раз, лучше прописать инструкции явно
 
     data->afl = afl;
 
@@ -122,7 +120,7 @@ size_t afl_custom_fuzz(my_mutator_t *data, const u8 *in_buf, size_t buf_size, u8
             fill_random(data->mutated_out + OFFSET_TYPE_IHDR, SIZE_TYPE, MAX_U8);
             break;
 
-        case MUTATE_WIDE:
+        case MUTATE_WIDE: // А что если размер mutated_out меньше OFFSET_WIDE_IHDR?
             *(uint32_t *)(data->mutated_out + OFFSET_WIDE_IHDR) = (u8)rand() % MAX_WIDE;
             break;
 
