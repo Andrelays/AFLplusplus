@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <zlib.h>
-#include <arpa/inet.h>
+#include <zlib.h> // TODO: why
+#include <arpa/inet.h> // TODO: Why?
 #include "png_mutator.h"
 
 const size_t NUM_MUTATION_OPTION = 9;
@@ -112,7 +112,14 @@ size_t afl_custom_fuzz(my_mutator_t *data, const u8 *in_buf, size_t buf_size, u8
         return mutated_size;
     }
 
-    switch ((mutation_ihdr_t)((size_t)rand() % NUM_MUTATION_OPTION))
+    switch ((mutation_ihdr_t)((size_t)rand() % NUM_MUTATION_OPTION)) 
+    // TODO: Probably, it could make sence to combine such mutations together
+    //       You may generate a number from 1 to 2**9 and use its bits to indicate which mutations should be turned on
+    //       For example:
+    //          - num = 2   (0b000000010) will turn on only MUTATE_TYPE, while
+    //          - num = 7   (0b000000111) will turn on MUTATE_LEN, MUTATE_TYPE, MUTATE_WIDE 
+    //          - num = 129 (0b010000001) will turn on MUTATE_LEN, MUTATE_FILTER
+    // I believe, it should increase coverage in some way or another, since different parts of target source code are used to process each mutation param
     {
         case MUTATE_LEN:
             fill_random(data->mutated_out + OFFSET_LEN_IHDR, SIZE_LEN, MAX_U8);
