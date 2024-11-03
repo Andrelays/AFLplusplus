@@ -66,7 +66,7 @@ make
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/output_fpng_test_mode.png?raw=true" width = 100%>
-<figcaption> Пример работы fpng </figcaption>
+<figcaption style="text-align:center"> Пример работы fpng </figcaption>
 </figure>
 
 ### Начальный набор данных:
@@ -108,20 +108,20 @@ afl-fuzz -i input_testcases -o output_default_only -- bin/target @@
 ```
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_fuzz_default_only_screen.png?raw=true" width = 100%>
-<figcaption> Вывод afl-fuzz в консоль </figcaption>
+<figcaption style="text-align:center"> Вывод afl-fuzz в консоль </figcaption>
 </figure>
 
 Фаззинг длился 20 минут, примерно через это время afl-fuzz прекращал активно находить новые пути в исследуемой программе, что можно проследить по графику.
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/edges_default_only.png?raw=true" width = 100%>
-<figcaption> График покрытия, сгенерированный afl-plot </figcaption>
+<figcaption style="text-align:center"> График покрытия, сгенерированный afl-plot </figcaption>
 </figure>
 
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_default_only.png?raw=true" width = 100%>
-<figcaption> Отчет, сгенерированный с помощью afl-cov </figcaption>
+<figcaption style="text-align:center"> Отчет, сгенерированный с помощью afl-cov </figcaption>
 </figure>
 
 > [!NOTE]
@@ -180,17 +180,17 @@ afl-plot <path/to/afl-fuzz/output> <path/to/afl-plot/output>
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/edges_custom_and_default.png?raw=true" width = 100%>
-<figcaption> 1. График покрытия <U> Custom and default </U>. Максимальное покрытие: 4183 </figcaption>
+<figcaption style="text-align:center"> 1. График покрытия <U> Custom and default </U>. Максимальное покрытие: 4183 </figcaption>
 </figure>
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/edges_custom_only.png?raw=true" width = 100%>
-<figcaption> 2. График покрытия <U> Custom only </U>. Максимальное покрытие: 4160 </figcaption>
+<figcaption style="text-align:center"> 2. График покрытия <U> Custom only </U>. Максимальное покрытие: 4160 </figcaption>
 </figure>
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/edges_default_only.png?raw=true" width = 100%>
-<figcaption> 3. График покрытия <U> Default only </U>. Максимальное покрытие: 4140 </figcaption>
+<figcaption style="text-align:center"> 3. График покрытия <U> Default only </U>. Максимальное покрытие: 4140 </figcaption>
 </figure>
 
 Как видно из графиков самым быстрым и эффективным по покрытию является инстанс **Custom and default**, на втором месте **Custom only** и на третьем **Default only**.
@@ -223,17 +223,17 @@ git clone --depth=1 https://github.com/richgel999/fpng.git
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_custom_and_default.png?raw=true" width = 100%>
-<figcaption> 1. Отчёт afl-cov <U> Custom and default </U> </figcaption>
+<figcaption style="text-align:center"> 1. Отчёт afl-cov <U> Custom and default </U> </figcaption>
 </figure>
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_custom_only.png?raw=true" width = 100%>
-<figcaption> 2. Отчёт afl-cov <U> Custom only </U> </figcaption>
+<figcaption style="text-align:center"> 2. Отчёт afl-cov <U> Custom only </U> </figcaption>
 </figure>
 
 <figure>
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_default_only.png?raw=true" width = 100%>
-<figcaption> 3. Отчёт afl-cov <U> Default only </U> </figcaption>
+<figcaption style="text-align:center"> 3. Отчёт afl-cov <U> Default only </U> </figcaption>
 </figure>
 
 ## Итоги и выводы
