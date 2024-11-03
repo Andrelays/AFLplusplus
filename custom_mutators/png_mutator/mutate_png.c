@@ -1,7 +1,7 @@
 /*
    Compile with:
 
-     gcc -shared -Wall -O3 mutate_png.c -o mutate_png.so -lz
+     gcc -shared -Wall -O3 mutate_png.c -o mutate_png.so -lz -I <path/to/afl++/include/> 
 
 */
 
