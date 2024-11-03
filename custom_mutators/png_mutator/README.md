@@ -134,6 +134,7 @@ AFL_CUSTOM_MUTATOR_ONLY=1 AFL_CUSTOM_MUTATOR_LIBRARY="./mutate_png.so" afl-fuzz 
 ```
 Перед запуском каждого инстанса я применял `unset` к этим переменным.
 Каждый из 3-ёх инстансов: **Custom and default**, **Custom only**, **Default only** работал на протяжении 20 минут. Для их сравнения я использовал инструменты `afl-plot` и `afl-cov`.
+#### afl-plot:
 Для использования `afl-plot`:
 ```bash
 afl-plot <path/to/afl-fuzz/output> <path/to/afl-plot/output>
@@ -148,11 +149,40 @@ afl-plot <path/to/afl-fuzz/output> <path/to/afl-plot/output>
 1. <U> **Default only** </U> Максимальное покрытие: 4140
 <img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/edges_default_only.png?raw=true" width = 100%>
 
-Как видно из этих графиков самым быстрым и эффективным по покрытию является инстанс **Custom and default**, на втором месте **Custom only** и на третьем **Default only**. У нас получилось получить прирост в покрытии.
+Как видно из этих графиков самым быстрым и эффективным по покрытию является инстанс **Custom and default**, на втором месте **Custom only** и на третьем **Default only**. У нас получилось получить прирост в покрытии и скорости по сравнению с дефолтными мутациями.
 
-Далее анализ с использованием `afl-cov`.
+#### [afl-cov](https://github.com/vanhauser-thc/afl-cov):
+`afl-cov` использует файлы тестовых случаев, созданные фаззером AFL++ `afl-fuzz`, для генерации результатов покрытия кода `gcov` для исследуемой программы.
+Чтобы начать работу с ним, для начала необходимо выполнить:
+```bash
+git clone https://github.com/vanhauser-thc/afl-cov.git
+```
+После чего скопировать ещё несобранный исследуемый проект в другую директорию:
+```bash
+git clone https://github.com/richgel999/fpng.git
+```
+и скомпилировать его ещё раз используя те же компиляторы `afl-clang-fast` и `afl-clang-fast++`, как было показано в пункте "[Выбор проекта](#выбор-проекта)", но добавив к флагам `CMAKE_C_FLAGS` и `CMAKE_CXX_FLAGS` следующие флаги: `-fprofile-arcs`, `-ftest-coverage` и `-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION`, а также к `CMAKE_EXE_LINKER_FLAGS` флаг: `--coverage`.
 
+После чего можно использовать инструмент `afl-cov`:
+```bash
+./afl-cov --clang --overwrite -d <path/to/afl-fuzz/output>\
+--coverage-cmd "<path/to/fpng_cov/bin/fpng_test> @@"\
+--code-dir <path/to/fpng_cov/build/CMakeFiles/fpng_test.dir> --enable-branch-coverage
+```
+, где "path/to/fpng_cov" - путь к копии исследуемого проекта, собранного с флагами, необходимыми для работы `afl-cov`(см. Выше). Подробнее про флаги запуска и сборку проекта можно найти на гитхабе [afl-cov](https://github.com/vanhauser-thc/afl-cov).
 
+На выходе мы получаем подробный отчёт, в котором показано, какие блоки кода были покрыты за время фаззинга. Также можно посмотреть, какие тестовые случаи увеличили покрытие и каких новых функций/строк/веток кода они достигли. Что позволяет эффективнее писать мутации.
 
+1. <U> **Custom and default** </U>
+<img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_custom_and_default.png?raw=true" width = 100%>
+
+1. <U> **Custom only** </U>
+<img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_custom_only.png?raw=true" width = 100%>
+
+1. <U> **Default only** </U>
+<img src="https://github.com/Andrelays/AFLplusplus/blob/stable/custom_mutators/png_mutator/pictures/afl_cov_default_only.png?raw=true" width = 100%>
+
+Из этих скринов также можно увидеть разницу в покрытии.
 
 ## Итоги и выводы
+В результате выполнения этого задания я научился работать с фаззером `afl++`, для тестирования проектов и писать свои собственные мутации. Также я работал с инструментам `afl-plot` и `afl-cov`, которые помогли мне визуализировать работу фаззера. У меня получилось с помощью своих мутаций улучшить работу фаззера: увеличить покрытие и ускорить его работу.
