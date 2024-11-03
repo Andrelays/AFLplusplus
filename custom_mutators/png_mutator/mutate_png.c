@@ -1,7 +1,7 @@
 /*
    Compile with:
 
-     gcc -shared -Wall -O3 post_library_png.so.c -o post_library_png.so -lz
+     gcc -shared -Wall -O3 mutate_png.c -o mutate_png.so -lz
 
 */
 
