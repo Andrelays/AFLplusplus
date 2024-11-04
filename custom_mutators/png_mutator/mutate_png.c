@@ -21,7 +21,7 @@ const size_t MAX_SIZE_INSERT_CHUNK = 256;
 const size_t OFFSET_TYPE_IN_CHUNK = 4;
 const size_t OFFSET_DATA_IN_CHUNK = 8;
 
-const size_t SIZE_TYPE = 4;
+const size_t SIZE_TYPE = 4; // TODO maybe it would be better to use `strlen(TYPE_ARRAY[0])`
 
 static const char *const TYPE_ARRAY[] = {
 "IDAT", "IEND", "IHDR", "PLTE", "bKGD",
@@ -32,7 +32,7 @@ static const char *const TYPE_ARRAY[] = {
 "zTXt", "fUZz" // special chunk for extra fuzzing hints
 };
 
-const size_t NUMBER_TYPES = 27;
+const size_t NUMBER_TYPES = 27; // TODO: it's better to use `sizeof(TYPE_ARRAY) / sizeof(char*)` here 
 
 
 typedef struct my_mutator {
@@ -82,6 +82,8 @@ size_t afl_custom_fuzz(my_mutator_t *data, const u8 *in_buf, size_t buf_size, u8
     }
 
     size_t len_chunk_data = 0;
+    
+    // TODO: and where is header mutations from `mutate_header.c`?
 
     for(size_t pos_in_buf = PNG_SIG_SIZE; pos_in_buf + SIZE_EMPTY_CHUNK <= buf_size; pos_in_buf += SIZE_EMPTY_CHUNK + len_chunk_data)
     {
